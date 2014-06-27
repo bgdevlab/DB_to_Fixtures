@@ -26,12 +26,14 @@ abstract class BaseDB{
 
   public abstract function getColumnTypes($table_schema = null);
 
-  public function getData($limit = 3, $orderby = '', $order = "asc"){
+  public function getData($limit = '', $orderby = '', $order = "asc"){
     $sql = 'SELECT * FROM ' . $this->table ;
     if(trim($orderby) !== ''){
       $sql .= ' ORDER BY ' . $orderby . ' ' . $order;
     }
-    $sql .=  ' LIMIT ' . $limit;
+    if (!is_null($limit) && ''!=$limit) {
+        $sql .=  ' LIMIT ' . $limit;    
+    } 
     return $this->pdo->query($sql.';')->fetchAll();
   }
 

@@ -27,7 +27,7 @@ class Util
 
   public static function isArgsValid(array $args){
     if(self::isNullOrEmpty($args['table'])
-            || !preg_match('/^[1-9]\d*$/' , $args['limit'])
+            || (!self::isNullOrEmpty($args['limit']) && !preg_match('/^[1-9]\d*$/' , $args['limit']))
             || !is_bool($args['nodata'])
             || !preg_match('/^(xml|yml)$/i', $args['output'])
             || (self::isNullOrEmpty($args['orderby']) && !self::isNullOrEmpty($args['order']))
