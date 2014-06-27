@@ -9,12 +9,12 @@
  * No Assurance, No responsibility
  */
 return array(
-    'type' => 'mysql',
+    'type' => 'pgsql',
     'host' => 'localhost',
     'port' => '',
-    'dbname' => 'students_development',
-    'table_schema' => 'students_development', //set dbname here, too for mysql
-    'db_user' => 'root',
+    'dbname' => 'dbname',
+    'table_schema' => 'public', //set dbname here, too for mysql
+    'db_user' => 'postgres',
     'password' => '',
 );
 

@@ -21,12 +21,13 @@ $long_opts = array(
   'output:', //default: 'yml'
   'orderby:', //default: null
   'order:', //default: null
+  'dbname:',
+  'schema:'
 );
 $args = getopt('', $long_opts);
 
 
 //set default values+
-if(Util::isNullOrEmpty($args['limit'])) $args['limit'] = 3;
 if(Util::isNullOrEmpty($args['nodata'])){
   $args['nodata'] = false;
 }else{
@@ -40,13 +41,15 @@ if(!isset($args['order'])) $args['order'] = '';
 //check input validation
 if(!Util::isArgsValid($args)){
   echo "Input is invalid\n" ;
-  echo "Usage Sample: php main.php --table=your_table [--output=yml] [--nodata=false] [--limit=3] [--orderby='' [--order=asc]]\n";
-  echo " table: table name which you want to create yaml|xml data from\n";
-  echo " output: 'yml' or 'xml'\n";
-  echo " nodata: boolean (true or false)\n";
-  echo " limit: integer more than 0\n";
-  echo " orderby: column name which you want to order the data by\n";
-  echo " order: 'asc' or 'desc'\n";
+  echo "Usage Sample: php main.php --table=your_table [--db=dbname] [--schema=schemaname] [--output=yml] [--nodata=false] [--limit=3] [--orderby='' [--order=asc]]\n";
+  echo "  table:   table name which you want to create yaml|xml data from\n";
+  echo "  output:  'yml' or 'xml'\n";
+  echo "  nodata:  boolean (true or false)\n";
+  echo "  limit:   integer more than 0\n";
+  echo "  orderby: column name which you want to order the data by\n";
+  echo "  order:   'asc' or 'desc'\n";
+  echo "  dbname:  database name\n";
+  echo "  schema:  schema name\n";    
   echo "Check 'main.php' and isArgsValid() in 'class/Util.php' for details.\n";
   exit;
 }
@@ -55,9 +58,17 @@ if(!Util::isArgsValid($args)){
 //get DB Info
 $db_info = require __DIR__ . '/db.config.php';
 
+// Override from the command line
+if(!Util::isNullOrEmpty($args['schema'])) {
+    $db_info['table_schema']=$args['schema'];
+} 
+if(!Util::isNullOrEmpty($args['dbname'])) {
+    $db_info['dbname']=$args['dbname'];
+}
 
 //Create DSN
 $dsn = Util::createDSN($db_info);
+
 
 
 //Use pgsql class when mysql (class_alias is difficult under namespace)
