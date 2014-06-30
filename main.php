@@ -35,7 +35,7 @@ if(Util::isNullOrEmpty($args['nodata'])){
   $args['nodata'] = Util::stringToBool($args['nodata']);
 }
 if(Util::isNullOrEmpty($args['output'])) $args['output'] = 'yml';
-if(Util::isNullOrEmpty($args['dir'])) $args['dir'] = __DIR__ . '/outfiles/';
+if(Util::isNullOrEmpty($args['dir'])) $args['dir'] = '.';
 if(!isset($args['orderby'])) $args['orderby'] = '';
 if(!isset($args['order'])) $args['order'] = '';
 
