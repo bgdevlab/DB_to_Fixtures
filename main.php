@@ -19,6 +19,7 @@ $long_opts = array(
   'limit:',  //default: 3
   'nodata:', //default: false
   'output:', //default: 'yml'
+  'dir:', //default: 'outfiles'
   'orderby:', //default: null
   'order:', //default: null
   'dbname:',
@@ -34,6 +35,7 @@ if(Util::isNullOrEmpty($args['nodata'])){
   $args['nodata'] = Util::stringToBool($args['nodata']);
 }
 if(Util::isNullOrEmpty($args['output'])) $args['output'] = 'yml';
+if(Util::isNullOrEmpty($args['dir'])) $args['dir'] = __DIR__ . '/outfiles/';
 if(!isset($args['orderby'])) $args['orderby'] = '';
 if(!isset($args['order'])) $args['order'] = '';
 
@@ -41,15 +43,16 @@ if(!isset($args['order'])) $args['order'] = '';
 //check input validation
 if(!Util::isArgsValid($args)){
   echo "Input is invalid\n" ;
-  echo "Usage Sample: php main.php --table=your_table [--db=dbname] [--schema=schemaname] [--output=yml] [--nodata=false] [--limit=3] [--orderby='' [--order=asc]]\n";
-  echo "  table:   table name which you want to create yaml|xml data from\n";
-  echo "  output:  'yml' or 'xml'\n";
-  echo "  nodata:  boolean (true or false)\n";
-  echo "  limit:   integer more than 0\n";
-  echo "  orderby: column name which you want to order the data by\n";
-  echo "  order:   'asc' or 'desc'\n";
-  echo "  dbname:  database name\n";
-  echo "  schema:  schema name\n";    
+  echo "Usage Sample: php main.php --table=your_table [--db=dbname] [--schema=schemaname] [--dir=outfiles] [--output=yml] [--nodata=false] [--limit=3] [--orderby='' [--order=asc]]\n";
+  echo "  table:    table name which you want to create yaml|xml data from\n";
+  echo "  output:   'yml' or 'xml'\n";
+  echo "  nodata:   boolean (true or false)\n";
+  echo "  limit:    integer more than 0\n";
+  echo "  orderby:  column name which you want to order the data by\n";
+  echo "  order:    'asc' or 'desc'\n";
+  echo "  dbname:   database name\n";
+  echo "  schema:   schema name\n";    
+  echo "  dir:      output directory name\n";    
   echo "Check 'main.php' and isArgsValid() in 'class/Util.php' for details.\n";
   exit;
 }
@@ -94,6 +97,7 @@ $template_kind = '\\DB_to_Fixtures\\template\\' . $args['output']; //yml, xml
 $template = new $template_kind;
 
 
+$template->setOutputDirectory($args['dir']);
 $template->fileOut($column_names, $values, $args['table']);
 
 

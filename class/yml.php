@@ -11,10 +11,10 @@
 
 namespace DB_to_Fixtures\template;
 
-class yml implements templateInterface
+class yml extends baseTemplate
 {
   public function fileOut(array $column_names, array $values, $table){
-    if(!$fp = fopen(__DIR__ . '/../outfiles/' .$table. '.' .getRealClassName(__CLASS__)  , 'w')) die ('Cannot open/create file!');
+    if(!$fp = fopen($this->getOutDirectory().'/'.$table. '.' .getRealClassName(__CLASS__)  , 'w')) die ('Cannot open/create file!');
 
     //Body of output file
     $body = "$table:" . PHP_EOL;

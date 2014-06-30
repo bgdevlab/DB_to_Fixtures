@@ -12,5 +12,6 @@
 namespace DB_to_Fixtures\template;
 
 interface templateInterface{
+  public function setOutputDirectory($dir);
   public function fileOut(array $column_names, array $values, $table);
 }
