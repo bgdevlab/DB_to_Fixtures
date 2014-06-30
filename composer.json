@@ -1,5 +1,5 @@
 {
-    "name": "bgdevlab/dbfixtures",
+    "name": "bgdevlab/db2fixtures",
     "description": "testing dbunit and db_to_fixtures",
     "require-dev": {
         "phpunit/phpunit": "~4.1",
